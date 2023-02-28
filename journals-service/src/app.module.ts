@@ -1,7 +1,20 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { MongooseModule } from '@nestjs/mongoose';
+import { MongooseConfigService } from './config/MongooseConfigService';
 import { LabsModule } from './labs/labs.module';
+import configuration from './config/configuration';
 
 @Module({
-  imports: [LabsModule],
+  imports: [
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useClass: MongooseConfigService,
+    }),
+    ConfigModule.forRoot({
+      load: [configuration],
+    }),
+    LabsModule,
+  ],
 })
 export class AppModule {}

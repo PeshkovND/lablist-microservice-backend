@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
-export class CreateMessageDto {
+export class KafkaMessageDto {
   @IsNotEmpty()
   @IsNumber()
   readonly num: number;

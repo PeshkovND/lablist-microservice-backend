@@ -10,17 +10,9 @@ import { JournalService } from './journals.service';
         name: 'JOURNAL_MICROSERVICE',
         transport: Transport.KAFKA,
         options: {
-          producer: {
-            createPartitioner: Partitioners.LegacyPartitioner,
-          },
           client: {
             clientId: 'journal',
             brokers: ['localhost:9092'],
-          },
-          producerOnlyMode: true,
-          consumer: {
-            allowAutoTopicCreation: true,
-            groupId: 'journal-consumer',
           },
         },
       },

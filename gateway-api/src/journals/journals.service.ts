@@ -8,8 +8,13 @@ export class JournalService {
     @Inject('JOURNAL_MICROSERVICE') private readonly journalClient: ClientKafka,
   ) {}
 
+  async onModuleInit() {
+    this.journalClient.subscribeToResponseOf('create-message');
+
+    await this.journalClient.connect();
+  }
+
   createMessage(data: CreateMessageDto) {
-    this.journalClient.emit('create-journal', JSON.stringify(data));
     this.journalClient.emit('create-message', JSON.stringify(data));
   }
 }
