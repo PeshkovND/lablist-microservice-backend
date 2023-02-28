@@ -1,12 +1,12 @@
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class CreateMessageDto {
   @IsNotEmpty()
   @IsNumber()
   readonly num: number;
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
-  readonly status: string;
+  readonly status?: string;
   @IsNumber()
   @IsNotEmpty()
   readonly score: number;

@@ -10,15 +10,17 @@ export class LabsController {
 
   @MessagePattern('create-message')
   async createLab(@Payload() data: KafkaMessageDto) {
-    const dto: CreateLabDto = {
-      num: data.num,
-      journalId: data.journalId,
-      score: data.score,
-      status: data.status,
-      userId: data.userId,
-    };
+    if (data.status) {
+      const dto: CreateLabDto = {
+        num: data.num,
+        journalId: data.journalId,
+        score: data.score,
+        status: data.status,
+        userId: data.userId,
+      };
 
-    const result = await this.labsService.createLab(dto);
-    console.log(result);
+      const result = await this.labsService.createLab(dto);
+      console.log(result);
+    }
   }
 }
