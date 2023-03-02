@@ -10,5 +10,6 @@ import { Lab, LabsSchema } from 'src/schemas/labs.schema';
   ],
   controllers: [LabsController],
   providers: [LabsService],
+  exports: [LabsService],
 })
 export class LabsModule {}
