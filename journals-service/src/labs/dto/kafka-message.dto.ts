@@ -8,8 +8,8 @@ export class KafkaMessageDto {
   @IsOptional()
   readonly status?: string;
   @IsNumber()
-  @IsNotEmpty()
-  readonly score: number;
+  @IsOptional()
+  readonly score?: number;
   @IsNotEmpty()
   @IsString()
   readonly userId: string;

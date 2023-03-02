@@ -7,10 +7,17 @@ import { MessagesService } from './messages.service';
 export class MessagesController {
   constructor(private readonly messagesService: MessagesService) {}
 
-  @Get(':id')
+  @Get(':id/messages')
   async getMessagesByJournalId(
     @Param('id') id: Message['journalId'],
   ): Promise<Message[]> {
     return this.messagesService.getMessagesByJournalId(id);
+  }
+
+  @Get(':id/history')
+  async getHistoryMessagesByJournalId(
+    @Param('id') id: Message['journalId'],
+  ): Promise<Message[]> {
+    return this.messagesService.getHistoryMessagesByJournalId(id);
   }
 }

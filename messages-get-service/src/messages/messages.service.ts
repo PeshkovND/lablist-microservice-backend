@@ -10,6 +10,13 @@ export class MessagesService {
   ) {}
 
   async getMessagesByJournalId(id: string): Promise<Message[]> {
-    return await this.messagesModel.find({ journalId: id });
+    return await this.messagesModel.find({ journalId: id, status: undefined });
+  }
+
+  async getHistoryMessagesByJournalId(id: string): Promise<Message[]> {
+    return await this.messagesModel.find({
+      journalId: id,
+      status: { $ne: undefined },
+    });
   }
 }
