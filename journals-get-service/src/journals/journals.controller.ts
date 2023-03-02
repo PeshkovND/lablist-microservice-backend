@@ -21,6 +21,7 @@ export class JournalsController {
     return this.journalsService.findOne(id);
   }
 
+  @Get(':id/labs')
   async getLabsByJournalId(@Param('id') id: string): Promise<Lab[]> {
     return this.labsService.getLabsByJournalId(id);
   }
