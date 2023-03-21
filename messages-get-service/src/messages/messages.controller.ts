@@ -1,6 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
-import { Param } from '@nestjs/common/decorators';
+import { Param, Query } from '@nestjs/common/decorators';
 import { Message } from 'src/schemas/message.schema';
+import { MessagesResponse } from 'src/types/messagesResponse';
 import { MessagesService } from './messages.service';
 
 @Controller()
@@ -10,14 +11,22 @@ export class MessagesController {
   @Get(':id/messages')
   async getMessagesByJournalId(
     @Param('id') id: Message['journalId'],
-  ): Promise<Message[]> {
-    return this.messagesService.getMessagesByJournalId(id);
+    @Query('offset') offset: number,
+    @Query('limit') limit: number,
+  ): Promise<MessagesResponse> {
+    return this.messagesService.getMessagesByJournalId(id, offset, limit);
   }
 
   @Get(':id/history')
   async getHistoryMessagesByJournalId(
     @Param('id') id: Message['journalId'],
-  ): Promise<Message[]> {
-    return this.messagesService.getHistoryMessagesByJournalId(id);
+    @Query('offset') offset: number,
+    @Query('limit') limit: number,
+  ): Promise<MessagesResponse> {
+    return this.messagesService.getHistoryMessagesByJournalId(
+      id,
+      offset,
+      limit,
+    );
   }
 }
