@@ -7,12 +7,16 @@ export type LabsDocument = Lab & Document;
 export class Lab {
   @Prop({ required: true })
   readonly num: number;
+
   @Prop({ required: true })
   readonly status: string;
+
   @Prop({ required: true })
   readonly score: number;
+
   @Prop({ required: true })
   readonly userId: string;
+
   @Prop({ required: true })
   readonly journalId: string;
 }

@@ -6,7 +6,10 @@ export class JournalLab {
 
 export class Journal {
   _id: string;
+
   labs: JournalLab[];
+
   discription?: string;
+
   students: string[];
 }

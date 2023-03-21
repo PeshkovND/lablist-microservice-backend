@@ -25,7 +25,6 @@ export class LabsService {
           },
         },
       );
-      await this.labsModel.findOne({ _id: requestedLab._id });
       return 'Updated lab with id: ' + requestedLab._id;
     }
     const lab = new this.labsModel(dto);

@@ -11,16 +11,22 @@ export class Contact {
 @Schema()
 export class User {
   _id: mongoose.Types.ObjectId | string;
+
   @Prop({ required: false })
   photo?: string;
+
   @Prop({ required: true })
   name: string;
+
   @Prop({ required: true })
   surname: string;
+
   @Prop({ required: false })
   contacts?: Contact[];
+
   @Prop({ required: true })
   email: string;
+
   @Prop({ required: true })
   phone: string;
 }

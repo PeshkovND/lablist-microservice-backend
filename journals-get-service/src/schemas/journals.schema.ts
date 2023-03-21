@@ -12,10 +12,13 @@ export class JournalLab {
 @Schema()
 export class Journal {
   _id: Types.ObjectId | string;
+
   @Prop({ required: true })
   labs: JournalLab[];
+
   @Prop()
   discription?: string;
+
   @Prop({ required: true })
   students: string[];
 }
