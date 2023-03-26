@@ -9,7 +9,13 @@ export class LabsService {
   constructor(@InjectModel(Lab.name) private labsModel: Model<LabsDocument>) {}
 
   async createLab(dto: CreateLabDto): Promise<string> {
-    const allLabs = await this.labsModel.find();
+    const allLabs = await this.labsModel
+      .find({ journalId: dto.journalId })
+      .sort({ order: -1 });
+    let lastOrder = 0;
+    if (allLabs.length !== 0) {
+      lastOrder = allLabs[0].order + 1;
+    }
     const requestedLab = allLabs.find(
       (elem) =>
         elem.num === dto.num &&
@@ -22,12 +28,13 @@ export class LabsService {
         {
           $set: {
             ...dto,
+            order: lastOrder,
           },
         },
       );
       return 'Updated lab with id: ' + requestedLab._id;
     }
-    const lab = new this.labsModel(dto);
+    const lab = new this.labsModel({ ...dto, order: lastOrder });
     await lab.save();
     return 'Created lab with id: ' + lab._id;
   }

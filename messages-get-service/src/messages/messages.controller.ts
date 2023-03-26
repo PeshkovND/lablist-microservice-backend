@@ -13,8 +13,14 @@ export class MessagesController {
     @Param('id') id: Message['journalId'],
     @Query('offset') offset: number,
     @Query('limit') limit: number,
+    @Query('order') order = -1,
   ): Promise<MessagesResponse> {
-    return this.messagesService.getMessagesByJournalId(id, offset, limit);
+    return this.messagesService.getMessagesByJournalId(
+      id,
+      offset,
+      limit,
+      order,
+    );
   }
 
   @Get(':id/history')
@@ -22,11 +28,13 @@ export class MessagesController {
     @Param('id') id: Message['journalId'],
     @Query('offset') offset: number,
     @Query('limit') limit: number,
+    @Query('order') order = -1,
   ): Promise<MessagesResponse> {
     return this.messagesService.getHistoryMessagesByJournalId(
       id,
       offset,
       limit,
+      order,
     );
   }
 }

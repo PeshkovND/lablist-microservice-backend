@@ -11,7 +11,18 @@ export class MessagesService {
   ) {}
 
   async createMessage(dto: CreateMessageDto) {
-    const message = new this.messagesModel({ ...dto, date: new Date() });
+    const allMessages = await this.messagesModel
+      .find({ journalId: dto.journalId })
+      .sort({ order: -1 });
+    let lastOrder = 0;
+    if (allMessages.length !== 0) {
+      lastOrder = allMessages[0].order + 1;
+    }
+    const message = new this.messagesModel({
+      ...dto,
+      date: new Date(),
+      order: lastOrder,
+    });
     await message.save();
     return 'Created message with id: ' + message._id;
   }

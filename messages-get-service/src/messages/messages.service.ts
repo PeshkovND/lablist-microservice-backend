@@ -14,6 +14,7 @@ export class MessagesService {
     id: string,
     offset: number,
     limit: number,
+    order: number,
   ): Promise<MessagesResponse> {
     const count = await this.messagesModel
       .where({ journalId: id, status: undefined })
@@ -22,6 +23,7 @@ export class MessagesService {
       .find({
         journalId: id,
         status: undefined,
+        order: { $gt: order },
       })
       .sort({ date: -1 })
       .skip(offset)
@@ -33,6 +35,7 @@ export class MessagesService {
     id: string,
     offset: number,
     limit: number,
+    order: number,
   ): Promise<MessagesResponse> {
     const count = await this.messagesModel
       .where({ journalId: id, status: { $ne: undefined } })
@@ -41,6 +44,7 @@ export class MessagesService {
       .find({
         journalId: id,
         status: { $ne: undefined },
+        order: { $gt: order },
       })
       .sort({ date: -1 })
       .skip(offset)

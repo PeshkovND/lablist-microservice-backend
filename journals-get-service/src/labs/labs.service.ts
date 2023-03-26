@@ -11,7 +11,7 @@ export class LabsService {
     return await this.labsModel.find();
   }
 
-  async getLabsByJournalId(id: string): Promise<Lab[]> {
-    return await this.labsModel.find({ journalId: id });
+  async getLabsByJournalId(id: string, order: number): Promise<Lab[]> {
+    return await this.labsModel.find({ journalId: id, order: { $gt: order } });
   }
 }
