@@ -5,6 +5,8 @@ export type LabsDocument = Lab & Document;
 
 @Schema()
 export class Lab {
+  _id: string;
+
   @Prop({ required: true })
   readonly num: number;
 

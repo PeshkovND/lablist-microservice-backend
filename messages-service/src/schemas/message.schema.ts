@@ -5,6 +5,8 @@ export type MessagesDocument = Message & Document;
 
 @Schema()
 export class Message {
+  readonly _id: string;
+
   @Prop({ required: true })
   readonly date: Date;
 

@@ -5,6 +5,7 @@ import { MongooseConfigService } from './config/MongooseConfigService';
 import { LabsModule } from './labs/labs.module';
 import configuration from './config/configuration';
 import { JournalsModule } from './journals/journals.module';
+import { GatewayModule } from './gateway/gateway.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { JournalsModule } from './journals/journals.module';
     }),
     LabsModule,
     JournalsModule,
+    GatewayModule,
   ],
 })
 export class AppModule {}

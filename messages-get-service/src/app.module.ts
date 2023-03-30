@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { GatewayModule } from 'src/gateway/gateway.module';
 import configuration from './config/configuration';
 import { MongooseConfigService } from './config/MongooseConfigService';
 import { MessagesModule } from './messages/messages.module';
@@ -15,6 +16,7 @@ import { MessagesModule } from './messages/messages.module';
       load: [configuration],
     }),
     MessagesModule,
+    GatewayModule,
   ],
 })
 export class AppModule {}
