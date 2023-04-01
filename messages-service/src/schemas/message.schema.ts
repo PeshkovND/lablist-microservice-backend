@@ -24,9 +24,6 @@ export class Message {
 
   @Prop({ required: true })
   readonly num: number;
-
-  @Prop({ required: true })
-  readonly order: number;
 }
 
 export const MessagesSchema = SchemaFactory.createForClass(Message);

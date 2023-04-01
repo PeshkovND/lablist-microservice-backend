@@ -20,43 +20,32 @@ export class LabsService {
   }
 
   async createLab(dto: CreateLabDto): Promise<string> {
-    const allLabs = await this.labsModel
-      .find({ journalId: dto.journalId })
-      .sort({ order: -1 });
-    let lastOrder = 0;
-    if (allLabs.length !== 0) {
-      lastOrder = allLabs[0].order + 1;
-    }
-    const requestedLab = allLabs.find(
-      (elem) =>
-        elem.num === dto.num &&
-        elem.userId === dto.userId &&
-        elem.journalId === dto.journalId,
-    );
+    const requestedLab = await this.labsModel.findOne({
+      num: dto.num,
+      userId: dto.userId,
+      journalId: dto.journalId,
+    });
     if (requestedLab) {
       await this.labsModel.updateOne(
-        { _id: requestedLab._id },
+        { _id: requestedLab.id },
         {
           $set: {
             ...dto,
-            order: lastOrder,
           },
         },
       );
       const labObj: Lab = {
         ...dto,
         _id: requestedLab._id,
-        order: lastOrder,
       };
       this.socketClient.emit('updateLab', labObj);
       return 'Updated lab with id: ' + requestedLab._id;
     }
-    const lab = new this.labsModel({ ...dto, order: lastOrder });
+    const lab = new this.labsModel(dto);
     await lab.save();
     const labObj: Lab = {
       ...dto,
       _id: lab._id,
-      order: lastOrder,
     };
     this.socketClient.emit('newLab', labObj);
     return 'Created lab with id: ' + lab._id;

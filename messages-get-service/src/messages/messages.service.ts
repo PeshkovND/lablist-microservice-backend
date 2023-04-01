@@ -12,49 +12,39 @@ export class MessagesService {
 
   async getMessagesByJournalId(
     id: string,
+    offset: number,
     limit: number,
-    greatOrder: number,
-    lessOrder: number,
   ): Promise<MessagesResponse> {
-    const allData = await this.messagesModel.where({
-      journalId: id,
-      status: undefined,
-    });
-    let lastOrder = 0;
-    const count = allData.length;
-    if (count > 0) lastOrder = Math.max(...allData.map((elem) => elem.order));
+    const count = await this.messagesModel
+      .where({ journalId: id, status: undefined })
+      .count();
     const data = await this.messagesModel
       .find({
         journalId: id,
         status: undefined,
-        order: { $gt: greatOrder, $lt: lessOrder },
       })
       .sort({ date: -1 })
+      .skip(offset)
       .limit(limit);
-    return { data: data, count: count, order: lastOrder };
+    return { data: data, count: count };
   }
 
   async getHistoryMessagesByJournalId(
     id: string,
+    offset: number,
     limit: number,
-    greatOrder: number,
-    lessOrder: number,
   ): Promise<MessagesResponse> {
-    const allData = await this.messagesModel.where({
-      journalId: id,
-      status: { $ne: undefined },
-    });
-    let lastOrder = 0;
-    const count = allData.length;
-    if (count > 0) lastOrder = Math.max(...allData.map((elem) => elem.order));
+    const count = await this.messagesModel
+      .where({ journalId: id, status: { $ne: undefined } })
+      .count();
     const data = await this.messagesModel
       .find({
         journalId: id,
         status: { $ne: undefined },
-        order: { $gt: greatOrder, $lt: lessOrder },
       })
       .sort({ date: -1 })
+      .skip(offset)
       .limit(limit);
-    return { data: data, count: count, order: lastOrder };
+    return { data: data, count: count };
   }
 }

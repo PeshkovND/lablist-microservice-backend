@@ -22,17 +22,9 @@ export class MessagesService {
   }
 
   async createMessage(dto: CreateMessageDto) {
-    const allMessages = await this.messagesModel
-      .find({ journalId: dto.journalId })
-      .sort({ order: -1 });
-    let lastOrder = 0;
-    if (allMessages.length !== 0) {
-      lastOrder = allMessages[0].order + 1;
-    }
     const message = new this.messagesModel({
       ...dto,
       date: new Date(),
-      order: lastOrder,
     });
     await message.save();
 
@@ -40,7 +32,6 @@ export class MessagesService {
       ...dto,
       _id: message._id,
       date: message.date,
-      order: message.order,
     };
 
     this.socketClient.emit('newMessage', messageObj);

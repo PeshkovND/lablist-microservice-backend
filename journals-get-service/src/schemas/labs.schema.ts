@@ -21,9 +21,6 @@ export class Lab {
 
   @Prop({ required: true })
   readonly journalId: string;
-
-  @Prop({ required: true })
-  readonly order: number;
 }
 
 export const LabsSchema = SchemaFactory.createForClass(Lab);

@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { LabsService } from 'src/labs/labs.service';
 import { Journal } from 'src/schemas/journals.schema';
 import { Lab } from 'src/schemas/labs.schema';
@@ -22,10 +22,7 @@ export class JournalsController {
   }
 
   @Get(':id/labs')
-  async getLabsByJournalId(
-    @Param('id') id: string,
-    @Query('order') order = -1,
-  ): Promise<Lab[]> {
-    return this.labsService.getLabsByJournalId(id, order);
+  async getLabsByJournalId(@Param('id') id: string): Promise<Lab[]> {
+    return this.labsService.getLabsByJournalId(id);
   }
 }

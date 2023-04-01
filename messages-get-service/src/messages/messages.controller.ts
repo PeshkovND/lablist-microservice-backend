@@ -11,30 +11,22 @@ export class MessagesController {
   @Get(':id/messages')
   async getMessagesByJournalId(
     @Param('id') id: Message['journalId'],
+    @Query('offset') offset: number,
     @Query('limit') limit: number,
-    @Query('greatOrder') greatOrder = -1,
-    @Query('lessOrder') lessOrder = Infinity,
   ): Promise<MessagesResponse> {
-    return this.messagesService.getMessagesByJournalId(
-      id,
-      limit,
-      greatOrder,
-      lessOrder,
-    );
+    return this.messagesService.getMessagesByJournalId(id, offset, limit);
   }
 
   @Get(':id/history')
   async getHistoryMessagesByJournalId(
     @Param('id') id: Message['journalId'],
+    @Query('offset') offset: number,
     @Query('limit') limit: number,
-    @Query('greatOrder') greatOrder = -1,
-    @Query('lessOrder') lessOrder = Infinity,
   ): Promise<MessagesResponse> {
     return this.messagesService.getHistoryMessagesByJournalId(
       id,
+      offset,
       limit,
-      greatOrder,
-      lessOrder,
     );
   }
 }
