@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { LabsService } from 'src/labs/labs.service';
 import { Journal } from 'src/schemas/journals.schema';
 import { Lab } from 'src/schemas/labs.schema';
@@ -12,8 +12,8 @@ export class JournalsController {
   ) {}
 
   @Get()
-  async getAllJournals(): Promise<Journal[]> {
-    return this.journalsService.findAll();
+  async getAllJournals(@Query('nameContains') name = ''): Promise<Journal[]> {
+    return this.journalsService.findAll(name);
   }
 
   @Get(':id')

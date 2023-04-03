@@ -9,8 +9,10 @@ export class JournalsService {
     @InjectModel(Journal.name) private journalsModel: Model<JournalsDocument>,
   ) {}
 
-  async findAll(): Promise<Journal[]> {
-    return await this.journalsModel.find();
+  async findAll(name: string): Promise<Journal[]> {
+    return await this.journalsModel.find({
+      discription: { $regex: name, $options: 'i' },
+    });
   }
 
   async findOne(id: string): Promise<Journal> {

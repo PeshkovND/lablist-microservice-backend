@@ -16,11 +16,14 @@ export class Journal {
   @Prop({ required: true })
   labs: JournalLab[];
 
-  @Prop()
-  discription?: string;
+  @Prop({ required: true })
+  discription: string;
 
   @Prop({ required: true })
   students: string[];
+
+  @Prop({ required: true })
+  dateOfCreation: Date;
 }
 
 export const JournalsSchema = SchemaFactory.createForClass(Journal);
