@@ -11,21 +11,21 @@ export class MessagesController {
   @Get(':id/messages')
   async getMessagesByJournalId(
     @Param('id') id: Message['journalId'],
-    @Query('offset') offset: number,
+    @Query('cursor') cursor: string | undefined = undefined,
     @Query('limit') limit: number,
   ): Promise<MessagesResponse> {
-    return this.messagesService.getMessagesByJournalId(id, offset, limit);
+    return this.messagesService.getMessagesByJournalId(id, cursor, limit);
   }
 
   @Get(':id/history')
   async getHistoryMessagesByJournalId(
     @Param('id') id: Message['journalId'],
-    @Query('offset') offset: number,
+    @Query('cursor') cursor: string | undefined = undefined,
     @Query('limit') limit: number,
   ): Promise<MessagesResponse> {
     return this.messagesService.getHistoryMessagesByJournalId(
       id,
-      offset,
+      cursor,
       limit,
     );
   }
