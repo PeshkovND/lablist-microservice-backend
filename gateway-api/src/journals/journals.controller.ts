@@ -4,7 +4,9 @@ import { JournalService } from './journals.service';
 
 @Controller('journal')
 export class JournalController {
-  constructor(private readonly journalService: JournalService) {}
+  constructor(private readonly journalService: JournalService) {
+    console.log(new Date());
+  }
 
   @Post()
   createMessage(@Body() data: CreateMessageDto) {

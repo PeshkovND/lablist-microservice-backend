@@ -24,14 +24,12 @@ export class MessagesService {
   async createMessage(dto: CreateMessageDto) {
     const message = new this.messagesModel({
       ...dto,
-      date: new Date(),
     });
     await message.save();
 
     const messageObj: Message = {
       ...dto,
       _id: message._id,
-      date: message.date,
     };
 
     this.socketClient.emit('newMessage', messageObj);

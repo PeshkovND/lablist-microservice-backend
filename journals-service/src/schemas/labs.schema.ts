@@ -21,6 +21,15 @@ export class Lab {
 
   @Prop({ required: true })
   readonly journalId: string;
+
+  @Prop({ required: true })
+  readonly dateOfCreation: Date;
+
+  @Prop({ required: true })
+  readonly version: number;
+
+  @Prop({ required: true })
+  readonly isActual: boolean;
 }
 
 export const LabsSchema = SchemaFactory.createForClass(Lab);

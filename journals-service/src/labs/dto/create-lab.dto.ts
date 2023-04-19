@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsDateString, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CreateLabDto {
   @IsNotEmpty()
@@ -20,4 +20,12 @@ export class CreateLabDto {
   @IsNotEmpty()
   @IsString()
   readonly journalId: string;
+
+  @IsNotEmpty()
+  @IsDateString()
+  readonly dateOfCreation: Date;
+
+  @IsNotEmpty()
+  @IsNumber()
+  readonly version: number;
 }

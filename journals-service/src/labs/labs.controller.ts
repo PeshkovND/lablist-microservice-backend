@@ -17,6 +17,8 @@ export class LabsController {
         score: data.score,
         status: data.status,
         userId: data.userId,
+        version: data.version,
+        dateOfCreation: data.date,
       };
 
       const result = await this.labsService.createLab(dto);

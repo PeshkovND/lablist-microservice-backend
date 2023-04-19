@@ -16,6 +16,7 @@ export class MessagesController {
       journalId: data.journalId,
       text: data.text,
       status: data.status,
+      date: data.date,
     };
     const result = await this.messagesService.createMessage(dto);
     console.log(result);

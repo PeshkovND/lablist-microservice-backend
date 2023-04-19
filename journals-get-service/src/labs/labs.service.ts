@@ -12,6 +12,9 @@ export class LabsService {
   }
 
   async getLabsByJournalId(id: string): Promise<Lab[]> {
-    return await this.labsModel.find({ journalId: id });
+    return await this.labsModel.find({
+      journalId: id,
+      isActual: true,
+    });
   }
 }
