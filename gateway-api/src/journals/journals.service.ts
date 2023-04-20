@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientKafka } from '@nestjs/microservices';
 import { CreateMessageDto } from './dto/create-message.dto';
+import { DeleteMessageDto } from './dto/delete-message.dto';
 
 @Injectable()
 export class JournalService {
@@ -10,11 +11,16 @@ export class JournalService {
 
   async onModuleInit() {
     this.journalClient.subscribeToResponseOf('create-message');
+    this.journalClient.subscribeToResponseOf('delete-message');
 
     await this.journalClient.connect();
   }
 
   createMessage(data: CreateMessageDto) {
     this.journalClient.emit('create-message', JSON.stringify(data));
+  }
+
+  deleteMessage(data: DeleteMessageDto) {
+    this.journalClient.emit('delete-message', JSON.stringify(data));
   }
 }

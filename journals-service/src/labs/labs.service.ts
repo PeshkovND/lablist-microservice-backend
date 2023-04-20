@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { io, Socket } from 'socket.io-client';
 import { Lab, LabsDocument } from 'src/schemas/labs.schema';
 import { CreateLabDto } from './dto/create-lab.dto';
+import { DeleteKafkaMessageDto } from './dto/delete-kafka-message.dto';
 
 @Injectable()
 export class LabsService {
@@ -54,5 +55,35 @@ export class LabsService {
     };
     this.socketClient.emit('newLab', labObj);
     return 'Created lab with id: ' + lab._id;
+  }
+
+  async deleteLab(dto: DeleteKafkaMessageDto): Promise<string> {
+    const requestedLab = await this.labsModel.findOne({ _id: dto._id });
+    if (requestedLab) {
+      if (dto.version <= requestedLab.version) return;
+      await this.labsModel.updateOne(
+        { _id: requestedLab.id },
+        {
+          $set: {
+            ...dto,
+            isActual: false,
+          },
+        },
+      );
+      const labObj: Lab = {
+        _id: dto._id,
+        num: requestedLab.num,
+        status: requestedLab.status,
+        score: requestedLab.score,
+        userId: requestedLab.userId,
+        journalId: requestedLab.journalId,
+        dateOfCreation: requestedLab.dateOfCreation,
+        version: dto.version,
+        isActual: false,
+      };
+
+      this.socketClient.emit('updateLab', labObj);
+      return 'Updated lab with id: ' + requestedLab._id;
+    }
   }
 }

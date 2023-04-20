@@ -3,6 +3,7 @@ import { MessagePattern, Payload } from '@nestjs/microservices';
 import { CreateLabDto } from './dto/create-lab.dto';
 import { KafkaMessageDto } from './dto/kafka-message.dto';
 import { LabsService } from './labs.service';
+import { DeleteKafkaMessageDto } from './dto/delete-kafka-message.dto';
 
 @Controller()
 export class LabsController {
@@ -24,5 +25,11 @@ export class LabsController {
       const result = await this.labsService.createLab(dto);
       console.log(result);
     }
+  }
+
+  @MessagePattern('delete-message')
+  async deleteLab(@Payload() data: DeleteKafkaMessageDto) {
+    const result = await this.labsService.deleteLab(data);
+    console.log(result);
   }
 }
