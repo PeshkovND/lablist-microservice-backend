@@ -1,19 +1,23 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientKafka } from '@nestjs/microservices';
-import { CreateMessageDto } from './dto/create-message.dto';
-import { DeleteMessageDto } from './dto/delete-message.dto';
+import { CreateLabMessageDto } from './dto/create-lab-message.dto';
+import { DeleteLabMessageDto } from './dto/delete-lab-message.dto';
 
 @Injectable()
 export class JournalService {
   constructor(
-    @Inject('JOURNAL_MICROSERVICE') private readonly journalClient: ClientKafka,
+    @Inject('GATEWAY_MICROSERVICE') private readonly journalClient: ClientKafka,
   ) {}
 
-  createMessage(data: CreateMessageDto) {
-    this.journalClient.emit('create-message', JSON.stringify(data));
+  async onModuleInit() {
+    await this.journalClient.connect();
   }
 
-  deleteMessage(data: DeleteMessageDto) {
-    this.journalClient.emit('delete-message', JSON.stringify(data));
+  createLab(data: CreateLabMessageDto) {
+    this.journalClient.emit('create-mark', JSON.stringify(data));
+  }
+
+  deleteLab(data: DeleteLabMessageDto) {
+    this.journalClient.emit('delete-mark', JSON.stringify(data));
   }
 }

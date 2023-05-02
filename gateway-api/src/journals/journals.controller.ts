@@ -1,19 +1,19 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { CreateMessageDto } from './dto/create-message.dto';
+import { CreateLabMessageDto } from './dto/create-lab-message.dto';
 import { JournalService } from './journals.service';
-import { DeleteMessageDto } from './dto/delete-message.dto';
+import { DeleteLabMessageDto } from './dto/delete-lab-message.dto';
 
 @Controller('journal')
 export class JournalController {
   constructor(private readonly journalService: JournalService) {}
 
   @Post()
-  createMessage(@Body() data: CreateMessageDto) {
-    return this.journalService.createMessage(data);
+  createMessage(@Body() data: CreateLabMessageDto) {
+    return this.journalService.createLab(data);
   }
 
   @Post('delete')
-  deleteMessage(@Body() data: DeleteMessageDto) {
-    return this.journalService.deleteMessage(data);
+  deleteMessage(@Body() data: DeleteLabMessageDto) {
+    return this.journalService.deleteLab(data);
   }
 }

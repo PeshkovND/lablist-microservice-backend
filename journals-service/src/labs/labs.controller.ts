@@ -1,6 +1,5 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { CreateLabDto } from './dto/create-lab.dto';
 import { KafkaMessageDto } from './dto/kafka-message.dto';
 import { LabsService } from './labs.service';
 import { DeleteKafkaMessageDto } from './dto/delete-kafka-message.dto';
@@ -9,24 +8,14 @@ import { DeleteKafkaMessageDto } from './dto/delete-kafka-message.dto';
 export class LabsController {
   constructor(private readonly labsService: LabsService) {}
 
-  @MessagePattern('create-message')
+  @MessagePattern('create-mark')
   async createLab(@Payload() data: KafkaMessageDto) {
     if (data.status) {
-      const dto: CreateLabDto = {
-        num: data.num,
-        journalId: data.journalId,
-        score: data.score,
-        status: data.status,
-        userId: data.userId,
-        version: data.version,
-        dateOfCreation: data.date,
-      };
-
-      await this.labsService.createLab(dto);
+      await this.labsService.createLab(data);
     }
   }
 
-  @MessagePattern('delete-message')
+  @MessagePattern('delete-mark')
   async deleteLab(@Payload() data: DeleteKafkaMessageDto) {
     await this.labsService.deleteLab(data);
   }

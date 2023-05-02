@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
-export class DeleteMessageDto {
+export class DeleteLabMessageDto {
   @IsNotEmpty()
   @IsString()
   readonly _id: string;
