@@ -22,14 +22,12 @@ export class LabsController {
         dateOfCreation: data.date,
       };
 
-      const result = await this.labsService.createLab(dto);
-      console.log(result);
+      await this.labsService.createLab(dto);
     }
   }
 
   @MessagePattern('delete-message')
   async deleteLab(@Payload() data: DeleteKafkaMessageDto) {
-    const result = await this.labsService.deleteLab(data);
-    console.log(result);
+    await this.labsService.deleteLab(data);
   }
 }

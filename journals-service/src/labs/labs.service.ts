@@ -45,7 +45,6 @@ export class LabsService {
       this.socketClient.emit('updateLab', labObj);
       return 'Updated lab with id: ' + requestedLab._id;
     }
-
     const lab = new this.labsModel({ ...dto, isActual: true });
     await lab.save();
     const labObj: Lab = {

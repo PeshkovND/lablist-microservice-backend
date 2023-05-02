@@ -15,6 +15,9 @@ export class UsersService {
     const journal = await fetchHttp<Journal>(
       process.env.GET_JOURNAL_SERVER_LINK + id,
     );
+    if (!journal) {
+      throw new Error('Journal not found');
+    }
     return await this.usersModel
       .find({ _id: { $in: journal.students } })
       .sort({ surname: 1, name: 1 });
